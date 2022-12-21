@@ -6,6 +6,7 @@ body {
     padding: 0 80px;
     min-width: 640px;
     color: white;
+
   }
 
   h1{
@@ -87,6 +88,29 @@ a.nav-link:hover
 {
    color: #3d73e1;
    text-decoration: none;
+}
+
+p {
+  line-height: normal;
+}
+
+
+
+#wrapper {
+  
+  
+  overflow: hidden;
+}
+#table-players {
+  width: 60%;
+  float:left; 
+  
+}
+#team-information {
+
+  /* overflow: hidden;  */
+  float:right;
+  width: 35%;
 }
 
   
