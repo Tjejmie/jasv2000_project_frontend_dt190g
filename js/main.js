@@ -14,24 +14,26 @@ const team_page = "team.html";
 let currentPage = "index.html";
 
 
-let teams = [];
+let arrayWithData = [];
+
+let teamName;
 
 
 function starterFunction() {
 	currentPage = window.location.pathname.split("/").find(str => str.includes(".html"));
 
-    const teamName = parseURLParams();
+    teamName = parseURLParams();
 
 	const teamsPromise = currentPage == team_page ? atlas.getPlayers(teamName) : atlas.getTeams();
 	teamsPromise
 	.then(fetchedTeams => {
-		teams = fetchedTeams;
+		arrayWithData = fetchedTeams;
 		createTable();
 	})
 	.catch(error => console.error(`An error occurd when getting teams from Atlas: ${error}`));
 
     if(currentPage == team_page){
-        const teamName = parseURLParams();
+        teamName = parseURLParams();
 
         // title to the clicked teamname
         document.getElementById("teamName").innerHTML= teamName;
@@ -52,40 +54,42 @@ function parseURLParams() {
 
 function createTable() {
 
-	const tableCreator = currentPage == team_page ? createTableForTeam : createTableForTeams;
+	const tableCreator = currentPage == team_page ? createTableForPlayers : createTableForTeams;
 
 	const table = document.getElementById("teams_table");
 	table.innerHTML = null;
 
 
     const selectElement = document.createElement("select");
-			selectElement.id = "select_" + teams.teamName;
+			selectElement.id = "select_" + arrayWithData.teamName;
 
 
-	tableCreator(teams, table);
+	tableCreator(arrayWithData, table);
 }
 
-function createTableForTeam(teams, table) {
+function createTableForPlayers(arrayWithData, table) {
     
-	teams.forEach(team => {
+	arrayWithData.forEach(team => {
+        if (team.teamName == teamName){
+            const tr = document.createElement("tr");
 
-		const tr = document.createElement("tr");
-
-		createTd(team.name, tr);
-		createTd(team.birthplace, tr);
-        createTd(team.length, tr);
-
-		table.appendChild(tr);
+            createTd(team.name, tr);
+            createTd(team.birthplace, tr);
+            createTd(team.length, tr);
+    
+            table.appendChild(tr);
+        }
+		
 	});
 }
 /**
 * Create table rows for all teams in the array.
-* @param teams an array of teams to create table rows for
+* @param arrayWithData an array of teams to create table rows for
 * @param table the table or the table body to add the rows to
 */
-function createTableForTeams(teams, table) {
+function createTableForTeams(arrayWithData, table) {
 	
-	teams.forEach(team => {
+	arrayWithData.forEach(team => {
 
 		const tr = document.createElement("tr");
 
