@@ -98,6 +98,8 @@ function createTable() {
 }
 
 function createTableForPlayers(players, table) {
+
+    
     
 	players.forEach(team => {
         if (team.teamName == teamName){
@@ -125,6 +127,9 @@ function createTableForPlayers(players, table) {
             var pSMGolds = document.createElement('p');
             var pHeadCoach = document.createElement('p');
             var pDivision = document.createElement('p');
+            var image = document.createElement('img');
+
+            image.src = '"../../images/rögle.avif"';
 
             pTeamName.innerHTML = 'Namn: ' + teamName;
             pCreated.innerHTML = 'Grundad: ' + team.created;
@@ -133,7 +138,7 @@ function createTableForPlayers(players, table) {
             pSMGolds.innerHTML = 'SM-guld: ' + team.SMgolds;
             pHeadCoach.innerHTML = 'Huvudtränare: ' + team.headCoach;
             pDivision.innerHTML = 'Division: ' + team.division;
-    
+            element.appendChild(image);
             element.appendChild(pTeamName);
             element.appendChild(pCreated);
             element.appendChild(pLocation);
