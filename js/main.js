@@ -120,6 +120,7 @@ function createTableForPlayers(players, table) {
     teams.forEach(team => {
         if (team.teamName == teamName){
             var element = document.getElementById('team-information');
+            var imageElement = document.getElementById('team-image');
             var pTeamName = document.createElement('p');
             var pCreated = document.createElement('p');
             var pLocation = document.createElement('p');
@@ -129,7 +130,19 @@ function createTableForPlayers(players, table) {
             var pDivision = document.createElement('p');
             var image = document.createElement('img');
 
-            image.src = '"../../images/rögle.avif"';
+         
+         
+          
+            fetch('/images/'+teamName+'.avif', { method: 'HEAD' })
+               .then(res => {
+                 if (res.ok) {
+                    image.src = '/images/'+teamName+'.avif';
+                  } else {
+                    image.src = '/images/ishockey.jpg';
+                }
+            }).catch(err => console.log('Error:', err));
+
+            
 
             pTeamName.innerHTML = 'Namn: ' + teamName;
             pCreated.innerHTML = 'Grundad: ' + team.created;
@@ -138,13 +151,14 @@ function createTableForPlayers(players, table) {
             pSMGolds.innerHTML = 'SM-guld: ' + team.SMgolds;
             pHeadCoach.innerHTML = 'Huvudtränare: ' + team.headCoach;
             pDivision.innerHTML = 'Division: ' + team.division;
-            element.appendChild(image);
+            imageElement.appendChild(image);
             element.appendChild(pTeamName);
             element.appendChild(pCreated);
             element.appendChild(pLocation);
             element.appendChild(pArena);
             element.appendChild(pSMGolds);
             element.appendChild(pHeadCoach);
+            element.appendChild(pDivision);
             element.appendChild(pDivision);
 
             

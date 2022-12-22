@@ -95,7 +95,6 @@ p {
 }
 
 
-
 #wrapper {
   
   
@@ -108,10 +107,23 @@ p {
 }
 #team-information {
 
-  /* overflow: hidden;  */
   float:right;
   width: 35%;
 }
 
-  
+img{
+  max-width: 30%;
+  height:auto;
+}
+
+
+
+#team-image{
+  display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom: 50px;
+}
+
+
   
