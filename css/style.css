@@ -111,18 +111,33 @@ p {
   width: 35%;
 }
 
-img{
-  max-width: 30%;
+
+
+#team-image img{
+  max-width:40%;
   height:auto;
 }
-
-
-
 #team-image{
   display:flex;
 align-items:center;
 justify-content:center;
 margin-bottom: 50px;
+}
+
+#image {
+  width: 60%;
+  float:right; 
+  
+}
+#player-information {
+
+  float:left;
+  width: 35%;
+}
+
+#image img{
+  max-width:90%;
+  height:auto;
 }
 
 
