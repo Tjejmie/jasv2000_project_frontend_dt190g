@@ -48,6 +48,30 @@ export class RESTDataSource extends DataSource {
 		console.log(teamName)
 		return this.getData('/api/teams/players/:'+teamName) || {};
 	}
+
+	async deleteTeam(organisationNumber) {
+		return this.getData('/api/teams/'+organisationNumber, 'DELETE')
+		|| console.error(error);
+	}
 	
+	async addTeam(teamName, created, location, arena, organisationNumber, headCoach, division, SMgolds) {
+
+		return this.getData('/api/teams', 'POST', {teamName:teamName, created:created, location:location, arena:arena,
+			organisationNumber:organisationNumber, headCoach:headCoach, division:division, SMgolds:SMgolds})
+		|| console.error(error);
+	}
+
+	async addPlayer(name, teamName, position, number, born, birthplace, length, weight, shoots, playerId, youthTeam, contract) {
+
+		return this.getData('/api/players', 'POST', {name:name, teamName:teamName, position:position, number:number,
+			born:born, birthplace:birthplace, length:length, weight:weight, shoots:shoots, 
+			playerId:playerId, youthTeam:youthTeam, contract:contract})
+		|| console.error(error);
+	}
+
+	async deletePlayer(playerId) {
+		return this.getData('/api/players/'+playerId, 'DELETE')
+		|| console.error(error);
+	}
 
 }

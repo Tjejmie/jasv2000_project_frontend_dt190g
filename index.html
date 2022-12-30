@@ -32,7 +32,7 @@
 						
 						<td>Stad</td>
 						<td>Division</td>
-					
+                        <td></td>
 					</tr>
 				</thead>
 				<tbody id="teams_table">
@@ -40,6 +40,23 @@
                    
 				</tbody>
 			</table>
+            <div id="stylized" class ="add-team">
+				<form class="add-team-form">
+					<label>Lägg till ett lag: </label>
+					<input type="text" id="teamName" placeholder="Namn">
+					<input type="text" id="created" placeholder="Grundad">
+                    <input type="text" id="location" placeholder="Stad">
+                    <input type="text" id="arena" placeholder="Arena">
+                    <input type="text" id="organisationNumber" placeholder="Organisationsnummer">
+                    <input type="text" id="SMgolds" placeholder="SM-guld">
+                    <input type="text" id="headCoach" placeholder="Huvudtränare">
+                    <input type="text" id="division" placeholder="Division">
+					<span class="button add" id="addTeam">Lägg till</span> <!-- available in the JS as addUser -->
+				</form>
+		
+				
+			</div>
+           
 		</main>
 
 	</body>

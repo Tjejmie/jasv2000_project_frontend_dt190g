@@ -37,4 +37,22 @@ export class Atlas {
 		return this.#dataSource.getPlayersFromTeam(teamName);
 	}
 
+	async deleteTeam(organisationNumber) {
+
+		return this.#dataSource.deleteTeam(organisationNumber);
+	}
+
+	async deletePlayer(playerId) {
+
+		return this.#dataSource.deletePlayer(playerId);
+	}
+
+	async addTeam(teamName, created, location, arena, organisationNumber, headCoach, division, SMgolds) {
+		return this.#dataSource.addTeam(teamName, created, location, arena, organisationNumber, headCoach, division, SMgolds);
+	}
+
+	async addPlayer(name, teamName, position, number, born, birthplace, length, weight, shoots, playerId, youthTeam, contract) {
+		return this.#dataSource.addPlayer(name, teamName, position, number, born, birthplace, length, weight, shoots, playerId, youthTeam, contract);
+	}
+
 }

@@ -38,6 +38,7 @@ async function starterFunction() {
         teams = teamPromiste;
         teamName = parseURLParams();
         document.getElementById("teamName").innerHTML= teamName;
+        
         const playerPromise = atlas.getPlayers();
         playerPromise
 	.then(fetchedTeams => {
@@ -61,7 +62,7 @@ async function starterFunction() {
     {
         const playerPromise = await atlas.getPlayers();
         players = playerPromise;
-
+        
         const teamPromiste = atlas.getTeams();
         teamPromiste
 	.then(fetchedTeams => {
@@ -170,7 +171,7 @@ function createPlayerInformation(players, playerName){
             
             pContract.innerHTML = 'Kontrakt till: ' + players[i].contract;
             
-
+            
             element.appendChild(pName);
             element.appendChild(pTeamName);
             element.appendChild(pAge);
@@ -190,14 +191,27 @@ function createPlayerInformation(players, playerName){
 
 function createTableForPlayers(players, table) {
 
-	players.forEach(team => {
-        if (team.teamName == teamName){
+	players.forEach(player => {
+        document.getElementById("addPlayer").addEventListener("click", addPlayer);
+        if (player.teamName == teamName){
             const tr = document.createElement("tr");
-            createTd(team.name, tr, element => element.innerHTML='<a class="nav-link" href="player.html?player='+team.name+'">'+team.name+'</a>');
-            createTd(team.birthplace, tr);
-            createTd(team.length, tr);
+            createTd(player.name, tr, element => element.innerHTML='<a class="nav-link" href="player.html?player='+player.name+'">'+player.name+'</a>');
+            createTd(player.number, tr);
+            createTd(player.birthplace, tr);
+
+            const deleteButton = document.createElement("span");
+            deleteButton.className += "button delete";
+            deleteButton.innerText = "Radera";
+            deleteButton.classList.add("delete-button");
+            deleteButton.addEventListener("click", (_) => deletePlayer(player.playerId))
+  
+        
+        tr.appendChild(deleteButton);
+            
             table.appendChild(tr);
+            
         }
+        
 	});
 
     teams.forEach(team => {
@@ -279,11 +293,63 @@ function createTableForTeams(teams, table) {
         createTd(team.teamName, tr, element => element.innerHTML='<a class="nav-link" href="team.html?team='+team.teamName+'">'+team.teamName+'</a>');
 		createTd(team.location, tr);
 		createTd(team.division, tr);
+        const deleteButton = document.createElement("span");
+        deleteButton.className += "button delete";
+        deleteButton.innerText = "Radera";
+        deleteButton.classList.add("delete-button");
+        deleteButton.addEventListener("click", (_) => deleteTeam(team.organisationNumber))
+        document.getElementById("addTeam").addEventListener("click", addTeam);
+        
+        tr.appendChild(deleteButton);
 
 		table.appendChild(tr);
 	});
 }
+function deleteTeam(organisationNumber){
+	atlas.deleteTeam(organisationNumber)
+	teams = teams.filter(team => team.organisationNumber != organisationNumber)
+	createTable();
+}
 
+function deletePlayer(playerId){
+	atlas.deletePlayer(playerId)
+	players = players.filter(player => player.playerId != playerId)
+	//createTable();
+}
+function addTeam(){
+	
+	const teamName = document.getElementById("teamName").value;
+	const created = document.getElementById("created").value;
+    const location = document.getElementById("location").value;
+    const arena = document.getElementById("arena").value;
+    const organisationNumber = document.getElementById("organisationNumber").value;
+    const SMgolds = document.getElementById("SMgolds").value;
+    const headCoach = document.getElementById("headCoach").value;
+    const division = document.getElementById("division").value;
+
+
+	atlas.addTeam(teamName, created, location, arena, organisationNumber, headCoach, division, SMgolds)
+
+}
+
+function addPlayer(){
+	console.log(teamName);
+	const name = document.getElementById("playerName").value;
+
+    const position = document.getElementById("position").value;
+    const number = document.getElementById("number").value;
+    const born = document.getElementById("born").value;
+    const birthplace = document.getElementById("birthplace").value;
+    const length = document.getElementById("length").value;
+    const weight = document.getElementById("weight").value;
+    const shoots = document.getElementById("shoots").value;
+    const playerId = document.getElementById("playerId").value;
+    const youthTeam = document.getElementById("youthTeam").value;
+    const contract = document.getElementById("contract").value;
+
+	atlas.addPlayer(name, teamName, position, number, born, birthplace, length, weight, shoots, playerId, youthTeam, contract)
+
+}
 
 /**
 * Create a data cell (td element) with the specified text

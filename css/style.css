@@ -142,3 +142,41 @@ margin-bottom: 50px;
 
 
   
+.button.delete {
+  color: black;
+  vertical-align: middle;
+  background-color: white;
+}
+.button {
+
+  border-radius: 4px;
+  background-color: inherit;
+  cursor: pointer;
+  padding: 3px 10px;
+}
+
+/* On mouse-over */
+.button:hover {
+  background: rgba(78, 108, 164, 0.2);
+  color:white;
+}
+
+/* On mouse-click */
+.button:active {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#stylized input{
+  display: block;
+  font-size:20px;
+  padding:4px 2px;
+  border:solid 1px rgb(37, 104, 95);
+  
+  margin:2px 0 20px 0;
+}
+
+
+#addTeam{
+  background-color: rgb(37, 104, 95);
+  
+}
