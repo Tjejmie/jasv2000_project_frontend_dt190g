@@ -18,6 +18,8 @@ let currentPage = "index.html";
 
 let startPage = "index.html";
 
+const allPlayerPage = "allPlayers.html";
+
 
 let players = [];
 let teams = [];
@@ -61,6 +63,17 @@ async function starterFunction() {
         createPlayerInformation(players, playerName);
         
 	})}
+    else if(currentPage == allPlayerPage){
+        
+ 
+       
+        const playerPromise = atlas.getPlayers();
+        playerPromise
+	.then(fetchedTeams => {
+		players = fetchedTeams
+        createTable();
+        
+	})}
     else
     {
         const playerPromise = await atlas.getPlayers();
@@ -99,9 +112,32 @@ function createTable() {
     if (currentPage == team_page){
         createTableForPlayers(players, table)
     }
+    else if(currentPage == allPlayerPage){
+        createTableForAllPlayers(players, table)
+
+    }
     else{
         createTableForTeams(teams, table)
     }
+}
+
+function createTableForAllPlayers(players, table) {
+
+	players.forEach(player => {
+        
+            const tr = document.createElement("tr");
+            createTd(player.name, tr);
+            createTd(player.teamName, tr);
+            createTd(player.birthplace, tr);
+
+            
+            table.appendChild(tr);
+            
+        
+        
+	});
+
+
 }
 
 async function createPlayerInformation(players, playerName){
@@ -348,7 +384,6 @@ function createTableForTeams(teams, table) {
 // Delete team and all its players
 function deleteTeam(organisationNumber){
     var teamName;
-    console.log(teams)
     for(let i = 0; i < teams.length; i++){
         if(teams[i].organisationNumber == organisationNumber){
             teamName = teams[i].teamName;
@@ -390,7 +425,6 @@ function addTeam(){
 }
 
 function addPlayer(){
-	console.log(teamName);
 	const name = document.getElementById("playerName").value;
 
     const position = document.getElementById("position").value;
