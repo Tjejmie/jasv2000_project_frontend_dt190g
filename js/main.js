@@ -65,7 +65,7 @@ async function starterFunction() {
     {
         const playerPromise = await atlas.getPlayers();
         players = playerPromise;
-        addLeagueOption();
+      
         const teamPromiste = atlas.getTeams();
         teamPromiste
 	.then(fetchedTeams => {
@@ -121,7 +121,11 @@ async function createPlayerInformation(players, playerName){
             var pYouthTeam = document.createElement('p');
             var pContract = document.createElement('p');
 
-       
+            const selectElement = document.getElementById("grades");
+			selectElement.id = "select_" + players[i].playerId;
+            teams = await atlas.getTeams();
+            
+        createTeamNameOptions(selectElement, teams, players[i].teamName);
 
             // create image on top of page
             var imageElement = document.getElementById('image');
@@ -138,7 +142,7 @@ async function createPlayerInformation(players, playerName){
 
             pName.innerHTML = 'Namn: ' + playerName;
             pAge.innerHTML = 'Ålder: ' + players[i].born;
-            pTeamName.innerHTML = 'Lag: ' + players[i].teamName;
+            pTeamName.innerHTML = 'Lag: ' + selectElement.value;
             
             pPosition.innerHTML = 'Position: ' + players[i].position;
             pNumber.innerHTML = 'Tröjnummer: ' + players[i].number;
@@ -189,23 +193,15 @@ async function createPlayerInformation(players, playerName){
             element.appendChild(pYouthTeam);
             element.appendChild(pContract);
 
-            const tr = document.createElement("tr");
-            const td = document.createElement("td");
-			td.classList.add("center");
-            const selectElement = document.getElementById("grades");
-			selectElement.id = "select_" + players[i].playerId;
-            teams = await atlas.getTeams();
-            
-        createTeamNameOptions(selectElement, teams, players[i].teamName);
-
+            var elemen2 = document.getElementById('player-information');
+            var asd = document.createElement('h2');
+            asd.innerHTML = 'Ändra spelarens lag: ';
         selectElement.addEventListener("change", option => {
             atlas.updatePlayer(players[i].playerId, option.target.value);
         });
-        td.appendChild(selectElement);
-        tr.appendChild(td);
-       
+        elemen2.appendChild(asd);
+        elemen2.appendChild(selectElement);
         
-		element.appendChild(tr);
         };
 
     }
@@ -213,9 +209,9 @@ async function createPlayerInformation(players, playerName){
 }
 
 function createTableForPlayers(players, table) {
-
+    document.getElementById("addPlayer").addEventListener("click", addPlayer);
 	players.forEach(player => {
-        document.getElementById("addPlayer").addEventListener("click", addPlayer);
+        
         if (player.teamName == teamName){
             const tr = document.createElement("tr");
             createTd(player.name, tr, element => element.innerHTML='<a class="nav-link" href="player.html?player='+player.name+'">'+player.name+'</a>');
@@ -228,7 +224,7 @@ function createTableForPlayers(players, table) {
             deleteButton.classList.add("delete-button");
             deleteButton.addEventListener("click", (_) => deletePlayer(player.playerId))
   
-        
+            
         tr.appendChild(deleteButton);
             
             table.appendChild(tr);
@@ -343,12 +339,31 @@ function createTableForTeams(teams, table) {
         tr.appendChild(td);
         tr.appendChild(deleteButton);
         
+        
 		table.appendChild(tr);
 	});
 });
 }
+
+// Delete team and all its players
 function deleteTeam(organisationNumber){
+    var teamName;
+    console.log(teams)
+    for(let i = 0; i < teams.length; i++){
+        if(teams[i].organisationNumber == organisationNumber){
+            teamName = teams[i].teamName;
+            
+            
+        }
+    }
+    for(let i = 0; i < players.length; i++){
+        if(players[i].teamName == teamName){
+            atlas.deletePlayer(players[i].playerId)
+        }
+    }
+
 	atlas.deleteTeam(organisationNumber)
+
 	teams = teams.filter(team => team.organisationNumber != organisationNumber)
 	createTable();
 }
@@ -388,7 +403,8 @@ function addPlayer(){
     const playerId = document.getElementById("playerId").value;
     const youthTeam = document.getElementById("youthTeam").value;
     const contract = document.getElementById("contract").value;
-
+    
+   
 	atlas.addPlayer(name, teamName, position, number, born, birthplace, length, weight, shoots, playerId, youthTeam, contract)
 
 }
@@ -410,13 +426,13 @@ function createTd(text, tr, extra) {
 	tr.appendChild(td);
 }
 
-function addLeagueOption(){
-	const grade = atlas.getLeagues();
-	grade.then(leagues =>{
-		const selectElement = document.getElementById("grades");
-		createLeagueOptions(selectElement, leagues);
-	})
-}
+// function addLeagueOption(){
+// 	const grade = atlas.getLeagues();
+// 	grade.then(leagues =>{
+// 		const selectElement = document.getElementById("grades");
+// 		createLeagueOptions(selectElement, leagues);
+// 	})
+// }
 
 function createLeagueOptions(selectElement, leagues, selectedGrade) {
 	
@@ -430,13 +446,13 @@ function createLeagueOptions(selectElement, leagues, selectedGrade) {
 	
 }
 
-function addTeamNameOption(){
-	const teams = atlas.getTeams();
-	teams.then(team =>{
-		const selectElement = document.getElementById("grades");
-		createTeamNameOptions(selectElement, team);
-	})
-}
+// function addTeamNameOption(){
+// 	const teams = atlas.getTeams();
+// 	teams.then(team =>{
+// 		const selectElement = document.getElementById("grades");
+// 		createTeamNameOptions(selectElement, team);
+// 	})
+// }
 
 function createTeamNameOptions(selectElement, team, selectedGrade) {
 	
