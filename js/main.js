@@ -62,7 +62,7 @@ async function starterFunction() {
     {
         const playerPromise = await atlas.getPlayers();
         players = playerPromise;
-        
+        addLeagueOption();
         const teamPromiste = atlas.getTeams();
         teamPromiste
 	.then(fetchedTeams => {
@@ -286,24 +286,36 @@ function createTableForPlayers(players, table) {
 * @param table the table or the table body to add the rows to
 */
 function createTableForTeams(teams, table) {
-	
+	atlas.getLeagues().then(league => {
 	teams.forEach(team => {
 
 		const tr = document.createElement("tr");
         createTd(team.teamName, tr, element => element.innerHTML='<a class="nav-link" href="team.html?team='+team.teamName+'">'+team.teamName+'</a>');
 		createTd(team.location, tr);
-		createTd(team.division, tr);
+		
+        const td = document.createElement("td");
+			td.classList.add("center");
         const deleteButton = document.createElement("span");
         deleteButton.className += "button delete";
         deleteButton.innerText = "Radera";
         deleteButton.classList.add("delete-button");
         deleteButton.addEventListener("click", (_) => deleteTeam(team.organisationNumber))
         document.getElementById("addTeam").addEventListener("click", addTeam);
-        
-        tr.appendChild(deleteButton);
 
+        const selectElement = document.createElement("select");
+			selectElement.id = "select_" + team.organisationNumber;
+        createLeagueOptions(selectElement, league, team.division);
+
+        selectElement.addEventListener("change", option => {
+            atlas.updateTeam(team.organisationNumber, option.target.value);
+        });
+        td.appendChild(selectElement);
+        tr.appendChild(td);
+        tr.appendChild(deleteButton);
+        
 		table.appendChild(tr);
 	});
+});
 }
 function deleteTeam(organisationNumber){
 	atlas.deleteTeam(organisationNumber)
@@ -368,5 +380,24 @@ function createTd(text, tr, extra) {
 	tr.appendChild(td);
 }
 
+function addLeagueOption(){
+	const grade = atlas.getLeagues();
+	grade.then(leagues =>{
+		const selectElement = document.getElementById("grades");
+		createLeagueOptions(selectElement, leagues);
+	})
+}
+
+function createLeagueOptions(selectElement, leagues, selectedGrade) {
+	
+	for (const val of leagues)
+    {
+		var option = document.createElement("option");
+        option.text = val.charAt(0).toUpperCase() + val.slice(1);
+		selectElement.appendChild(option);
+		selectElement.value = selectedGrade;
+    }
+	
+}
 
 document.addEventListener('DOMContentLoaded', starterFunction);

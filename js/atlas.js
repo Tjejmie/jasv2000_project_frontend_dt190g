@@ -55,4 +55,11 @@ export class Atlas {
 		return this.#dataSource.addPlayer(name, teamName, position, number, born, birthplace, length, weight, shoots, playerId, youthTeam, contract);
 	}
 
+	async getLeagues() {
+		return this.#dataSource.getLeagues();
+	}
+
+	updateTeam(organisationNumber, division) {
+		return this.#dataSource.updateTeam(organisationNumber, division);
+	}
 }

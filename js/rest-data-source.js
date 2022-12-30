@@ -73,5 +73,12 @@ export class RESTDataSource extends DataSource {
 		return this.getData('/api/players/'+playerId, 'DELETE')
 		|| console.error(error);
 	}
+	async getLeagues() {
+		return this.getData('/api/leagues');
+	}
 
+	updateTeam(organisationNumber, division) {
+		return this.getData('/api/teams/'+organisationNumber, 'PUT', {division: division})
+		|| console.error(error);
+	}
 }
