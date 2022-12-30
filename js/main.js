@@ -47,16 +47,19 @@ async function starterFunction() {
 	})
     }
     else if(currentPage == player_page){
+        
         const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
         playerName = urlParams.get('player')
         
         document.getElementById("playerName").innerHTML= playerName;
+       
         const playerPromise = atlas.getPlayers();
         playerPromise
 	.then(fetchedTeams => {
 		players = fetchedTeams
         createPlayerInformation(players, playerName);
+        
 	})}
     else
     {
@@ -101,7 +104,7 @@ function createTable() {
     }
 }
 
-function createPlayerInformation(players, playerName){
+async function createPlayerInformation(players, playerName){
     
     for(let i = 0; i < players.length; i++){
         if (players[i].name == playerName){
@@ -117,6 +120,8 @@ function createPlayerInformation(players, playerName){
             var pShooter = document.createElement('p');
             var pYouthTeam = document.createElement('p');
             var pContract = document.createElement('p');
+
+       
 
             // create image on top of page
             var imageElement = document.getElementById('image');
@@ -183,6 +188,24 @@ function createPlayerInformation(players, playerName){
             element.appendChild(pShooter);
             element.appendChild(pYouthTeam);
             element.appendChild(pContract);
+
+            const tr = document.createElement("tr");
+            const td = document.createElement("td");
+			td.classList.add("center");
+            const selectElement = document.getElementById("grades");
+			selectElement.id = "select_" + players[i].playerId;
+            teams = await atlas.getTeams();
+            
+        createTeamNameOptions(selectElement, teams, players[i].teamName);
+
+        selectElement.addEventListener("change", option => {
+            atlas.updatePlayer(players[i].playerId, option.target.value);
+        });
+        td.appendChild(selectElement);
+        tr.appendChild(td);
+       
+        
+		element.appendChild(tr);
         };
 
     }
@@ -226,7 +249,7 @@ function createTableForPlayers(players, table) {
             var pHeadCoach = document.createElement('p');
             var pDivision = document.createElement('p');
             var image = document.createElement('img');
-          
+            
             fetch('/images/'+teamName+'.avif', { method: 'HEAD' })
                .then(res => {
                  if (res.ok) {
@@ -236,6 +259,12 @@ function createTableForPlayers(players, table) {
                 }
             }).catch(err => console.log('Error:', err));
 
+
+            
+
+
+
+    
             
             pTeamName.innerHTML = 'Namn: ' + teamName;
             pCreated.innerHTML = 'Grundad: ' + team.created;
@@ -262,7 +291,8 @@ function createTableForPlayers(players, table) {
                 pHeadCoach.innerHTML = 'Huvudtränare: Ingen information';
             }
    
-           
+        
+
             pDivision.innerHTML = 'Division: ' + team.division;
             imageElement.appendChild(image);
             element.appendChild(pTeamName);
@@ -394,6 +424,26 @@ function createLeagueOptions(selectElement, leagues, selectedGrade) {
     {
 		var option = document.createElement("option");
         option.text = val.charAt(0).toUpperCase() + val.slice(1);
+		selectElement.appendChild(option);
+		selectElement.value = selectedGrade;
+    }
+	
+}
+
+function addTeamNameOption(){
+	const teams = atlas.getTeams();
+	teams.then(team =>{
+		const selectElement = document.getElementById("grades");
+		createTeamNameOptions(selectElement, team);
+	})
+}
+
+function createTeamNameOptions(selectElement, team, selectedGrade) {
+	
+	for (const val of team)
+    {
+		var option = document.createElement("option");
+        option.text = val.teamName;
 		selectElement.appendChild(option);
 		selectElement.value = selectedGrade;
     }

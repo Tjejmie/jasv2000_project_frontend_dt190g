@@ -62,4 +62,7 @@ export class Atlas {
 	updateTeam(organisationNumber, division) {
 		return this.#dataSource.updateTeam(organisationNumber, division);
 	}
+	updatePlayer(playerId, teamName) {
+		return this.#dataSource.updatePlayer(playerId, teamName);
+	}
 }

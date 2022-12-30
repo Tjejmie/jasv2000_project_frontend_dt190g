@@ -81,4 +81,9 @@ export class RESTDataSource extends DataSource {
 		return this.getData('/api/teams/'+organisationNumber, 'PUT', {division: division})
 		|| console.error(error);
 	}
+
+	updatePlayer(playerId, teamName) {
+		return this.getData('/api/players/'+playerId, 'PUT', {teamName: teamName})
+		|| console.error(error);
+	}
 }
