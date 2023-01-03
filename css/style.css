@@ -155,6 +155,7 @@ margin-bottom: 50px;
   background-color: inherit;
   cursor: pointer;
   padding: 3px 10px;
+  margin-right: 10px;
 }
 
 /* On mouse-over */
@@ -178,8 +179,12 @@ margin-bottom: 50px;
 }
 
 
-#addTeam{
+#addTeam, #addPlayer{
   background-color: rgb(37, 104, 95);
   
+}
+
+.add-team-form{
+  margin-top: 50px;
 }
 
