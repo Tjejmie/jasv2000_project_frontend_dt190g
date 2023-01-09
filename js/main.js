@@ -360,13 +360,15 @@ async function displayPlayerInformation(players, playerName){
  * @param image img element that is created
  * @param teamName name of the team whose image is to be displayed
  */
+
 function loadImage(image, teamName){
-    fetch('/images/'+teamName+'.avif', { method: 'HEAD' })
+    teamName = teamName.toLowerCase();
+    fetch('./images/'+teamName+'.avif', { method: 'HEAD' })
                .then(res => {
                  if (res.ok) { // If team image exist
-                    image.src = '/images/'+teamName+'.avif';
+                    image.src = './images/'+teamName+'.avif';
                   } else { // Team image does not exist. Set default image
-                    image.src = '/images/ishockey.jpg';
+                    image.src = './images/ishockey.jpg';
                 }
             }).catch(err => console.log('Error:', err));
 }
