@@ -1,3 +1,5 @@
+
+
 body {
    
     font-size: 22px;
@@ -6,6 +8,7 @@ body {
     padding: 0 80px;
     min-width: 640px;
     color: white;
+
   }
 
   h1{
@@ -89,5 +92,99 @@ a.nav-link:hover
    text-decoration: none;
 }
 
+p {
+  line-height: normal;
+}
+
+
+#wrapper {
   
   
+  overflow: hidden;
+}
+#table-players {
+  width: 60%;
+  float:left; 
+  
+}
+#team-information {
+
+  float:right;
+  width: 35%;
+}
+
+
+
+#team-image img{
+  max-width:40%;
+  height:auto;
+}
+#team-image{
+  display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom: 50px;
+}
+
+#image {
+  width: 60%;
+  float:right; 
+  
+}
+#player-information {
+
+  float:left;
+  width: 35%;
+}
+
+#image img{
+  max-width:90%;
+  height:auto;
+}
+
+
+  
+.button.delete {
+  color: black;
+  vertical-align: middle;
+  background-color: white;
+}
+.button {
+
+  border-radius: 4px;
+  background-color: inherit;
+  cursor: pointer;
+  padding: 3px 10px;
+  margin-right: 10px;
+}
+
+/* On mouse-over */
+.button:hover {
+  background: rgba(78, 108, 164, 0.2);
+  color:white;
+}
+
+/* On mouse-click */
+.button:active {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#stylized input{
+  display: block;
+  font-size:20px;
+  padding:4px 2px;
+  border:solid 1px rgb(37, 104, 95);
+  
+  margin:2px 0 20px 0;
+}
+
+
+#addTeam, #addPlayer{
+  background-color: rgb(37, 104, 95);
+  
+}
+
+.add-team-form{
+  margin-top: 50px;
+}
+

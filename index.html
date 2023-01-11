@@ -17,13 +17,17 @@
 	<body>
 		<header>
 			<h1 class="center">Svenska hockeylag</h1>
+		
+			<a class="nav-link" href="allPlayers.html"><p>Se alla spelare</p></a>
             <p>Klicka på ett lag för att få mer information</p>
+
+			
 
 		</header>
 
 		<main>
 		
-			
+
 			<table>
 				<thead>
 					<tr>
@@ -32,14 +36,32 @@
 						
 						<td>Stad</td>
 						<td>Division</td>
-					
+                        <td></td>
 					</tr>
 				</thead>
-				<tbody id="teams_table">
+				<tbody id="teams_or_players_table">
                     
                    
 				</tbody>
 			</table>
+            <div id="stylized" class ="add-team">
+				<form autocomplete="off" class="add-team-form">
+					<label>Lägg till ett lag: </label>
+					<input type="text" id="teamName" placeholder="Namn *">
+					<input type="text" id="created" placeholder="Grundad *">
+                    <input type="text" id="location" placeholder="Stad *">
+                    <input type="text" id="arena" placeholder="Arena">
+                    <input type="text" id="organisationNumber" placeholder="Organisationsnummer *">
+                    <input type="text" id="SMgolds" placeholder="SM-guld">
+                    <input type="text" id="headCoach" placeholder="Huvudtränare">
+                    <input type="text" id="division" placeholder="Division *">
+					
+					<span class="button add" id="addTeam">Lägg till</span>
+				</form>
+		
+				
+			</div>
+	
 		</main>
 
 	</body>
